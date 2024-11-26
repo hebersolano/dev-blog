@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_layout_submenus",
+  "info": {
+    "displayName": "Submenu",
+    "icon": "dashboard"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "submenu": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::menu.menu"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_layout_page_infos",
+  "info": {
+    "displayName": "Page Info",
+    "icon": "file"
+  },
+  "options": {},
+  "attributes": {
+    "content": {
+      "type": "blocks"
+    },
+    "cover": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "seoInformation": {
+      "type": "component",
+      "repeatable": false,
+      "component": "seo.seo-information"
+    }
+  }
+}

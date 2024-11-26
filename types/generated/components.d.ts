@@ -11,6 +11,19 @@ export interface BlogPostsSelection extends Struct.ComponentSchema {
   };
 }
 
+export interface ConfigSocialLinks extends Struct.ComponentSchema {
+  collectionName: 'components_config_social_links';
+  info: {
+    displayName: 'Social links';
+  };
+  attributes: {
+    link: Schema.Attribute.String & Schema.Attribute.Required;
+    socialMedia: Schema.Attribute.Enumeration<
+      ['github', 'youtube', 'twitter', 'facebook', 'whatsapp']
+    >;
+  };
+}
+
 export interface LayoutFeaturedCourse extends Struct.ComponentSchema {
   collectionName: 'components_layout_featured_courses';
   info: {
@@ -50,6 +63,48 @@ export interface LayoutLink extends Struct.ComponentSchema {
   };
 }
 
+export interface LayoutMission extends Struct.ComponentSchema {
+  collectionName: 'components_layout_missions';
+  info: {
+    description: '';
+    displayName: 'Mission';
+    icon: 'arrowRight';
+  };
+  attributes: {
+    content: Schema.Attribute.Text;
+    heading: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Our Mission'>;
+    showLogo: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+  };
+}
+
+export interface LayoutNewsletterForm extends Struct.ComponentSchema {
+  collectionName: 'components_layout_newsletter_forms';
+  info: {
+    description: '';
+    displayName: 'Newsletter Form';
+    icon: 'envelop';
+  };
+  attributes: {
+    heading: Schema.Attribute.String & Schema.Attribute.Required;
+    subheading: Schema.Attribute.Text;
+  };
+}
+
+export interface LayoutPageInfo extends Struct.ComponentSchema {
+  collectionName: 'components_layout_page_infos';
+  info: {
+    displayName: 'Page Info';
+    icon: 'file';
+  };
+  attributes: {
+    content: Schema.Attribute.Blocks;
+    cover: Schema.Attribute.Media<'images'>;
+    seoInformation: Schema.Attribute.Component<'seo.seo-information', false>;
+  };
+}
+
 export interface LayoutServicesPreview extends Struct.ComponentSchema {
   collectionName: 'components_layout_services_previews';
   info: {
@@ -58,6 +113,18 @@ export interface LayoutServicesPreview extends Struct.ComponentSchema {
   };
   attributes: {
     services: Schema.Attribute.Relation<'oneToMany', 'api::service.service'>;
+  };
+}
+
+export interface LayoutSubmenu extends Struct.ComponentSchema {
+  collectionName: 'components_layout_submenus';
+  info: {
+    displayName: 'Submenu';
+    icon: 'dashboard';
+  };
+  attributes: {
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    submenu: Schema.Attribute.Relation<'oneToOne', 'api::menu.menu'>;
   };
 }
 
@@ -77,10 +144,15 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'blog.posts-selection': BlogPostsSelection;
+      'config.social-links': ConfigSocialLinks;
       'layout.featured-course': LayoutFeaturedCourse;
       'layout.hero': LayoutHero;
       'layout.link': LayoutLink;
+      'layout.mission': LayoutMission;
+      'layout.newsletter-form': LayoutNewsletterForm;
+      'layout.page-info': LayoutPageInfo;
       'layout.services-preview': LayoutServicesPreview;
+      'layout.submenu': LayoutSubmenu;
       'seo.seo-information': SeoSeoInformation;
     }
   }
