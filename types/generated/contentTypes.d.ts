@@ -675,6 +675,37 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiPostPostCategory extends Struct.CollectionTypeSchema {
+  collectionName: 'post-categories';
+  info: {
+    displayName: 'Post category';
+    pluralName: 'post-categories';
+    singularName: 'post-category';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::post.post-category'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiSeoConfigSeoConfig extends Struct.SingleTypeSchema {
   collectionName: 'seo_configs';
   info: {
@@ -1315,6 +1346,7 @@ declare module '@strapi/strapi' {
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::menu.menu': ApiMenuMenu;
       'api::post.post': ApiPostPost;
+      'api::post.post-category': ApiPostPostCategory;
       'api::seo-config.seo-config': ApiSeoConfigSeoConfig;
       'api::service.service': ApiServiceService;
       'api::static-page.static-page': ApiStaticPageStaticPage;
