@@ -54,4 +54,19 @@ Is injected is strapi's core functions (policies, controllers and services) to g
 
 - Are functions after a request reach certain route and somehow alter the request/response
 - Middlewares does not deal with core business logic
-- Executed before the controller or after
+- Executed before or after the controller
+
+## [Controllers](https://docs.strapi.io/dev-docs/backend-customization/controllers)
+
+- Responsible for executing the core business logic associated to rotes.
+- They are organized into actions (i.e single functions). Tied to APIs or introduced by plugins
+- Available via the strapi object (`strapi.controller()`)
+- Controllers use low level functions (services) that perform specific tasks
+
+## [Services](https://docs.strapi.io/dev-docs/backend-customization/services)
+
+- Controllers use services to perform single tasks and services on turn use underlying lower-lever functions/apis to perform data operations
+- Services are helper functions that usually perform single, specific tasks and are meant to be reusable.
+- Services don't perform tasks as db querying directly, instead they rely on the **Entity Service API**, which on turn relies on the **Query Engine API**
+- Services belong to APIs and plugins
+- They are accessible from Controllers and other Services via the `strapi.service()`
