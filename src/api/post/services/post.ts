@@ -2,9 +2,20 @@
  * post service
  */
 
-import { factories } from "@strapi/strapi";
+import { Core, factories } from "@strapi/strapi";
 
 export default factories.createCoreService("api::post.post", ({ strapi }) => ({
+  premiumPostsAccess(credentials, query: Record<string, Record<string, string>>) {
+    let filters: Record<string, string> = query.filters || {};
+    if (credentials && credentials?.role.name === "Guest Post") {
+      filters.premium = "true";
+    } else {
+      filters.premium = "false";
+    }
+
+    return { ...query, filters };
+  },
+
   // Method 1: Creating an entirely custom service
   async exampleService() {
     console.log("example service called");
@@ -31,9 +42,7 @@ export default factories.createCoreService("api::post.post", ({ strapi }) => ({
   },
 
   // Method 3: Replacing a core service
-  async findOne(documentId, params = {}) {
-    return await strapi.documents("api::post.post").findOne({
-      documentId: "a1b2c3d4e5f6g7h8i9j0klm",
-    });
-  },
+  // async findOne(documentId, params = {}) {
+  //   return strapi.documents("api::post.post").findOne(documentId, this.getFetchParams(params));
+  // },
 }));
