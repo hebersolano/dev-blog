@@ -2,7 +2,14 @@
  * post service
  */
 
-import { Core, factories } from "@strapi/strapi";
+import { factories } from "@strapi/strapi";
+
+type AnyDocument = {
+  documentId: string;
+  id: number;
+} & {
+  [key: string]: any;
+};
 
 export default factories.createCoreService("api::post.post", ({ strapi }) => ({
   premiumPostsAccess(credentials, query: Record<string, Record<string, string>>) {
@@ -32,17 +39,19 @@ export default factories.createCoreService("api::post.post", ({ strapi }) => ({
   async find(...args) {
     // Calling the default core controller
     const { results, pagination } = await super.find(...args);
-
-    // some custom logic
-    results.forEach((result) => {
-      result.counter = 1;
-    });
-
     return { results, pagination };
   },
 
   // Method 3: Replacing a core service
-  // async findOne(documentId, params = {}) {
-  //   return strapi.documents("api::post.post").findOne(documentId, this.getFetchParams(params));
-  // },
+  async findOne(documentId, params = {}) {
+    const res = strapi.documents("api::post.post").findOne({
+      ...params,
+      status: "published",
+      populate: {
+        user_likes: true,
+      },
+      documentId,
+    });
+    return res as Promise<AnyDocument>;
+  },
 }));

@@ -675,6 +675,10 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user_likes: Schema.Attribute.Relation<
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -1311,6 +1315,7 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    posts: Schema.Attribute.Relation<'manyToMany', 'api::post.post'>;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;

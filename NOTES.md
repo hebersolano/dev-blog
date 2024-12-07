@@ -70,3 +70,12 @@ Is injected is strapi's core functions (policies, controllers and services) to g
 - Services don't perform tasks as db querying directly, instead they rely on the **Entity Service API** (Strapi v5 [**Document Service API**](https://docs.strapi.io/dev-docs/api/document-service)), which on turn relies on the **Query Engine API**
 - Services belong to APIs and plugins
 - They are accessible from Controllers and other Services via the `strapi.service()`
+
+# INDEX
+
+1.  Strapi core collection-type services: node*modules/.pnpm/@strapi+core@5.4.2*@babel+runtime@7.26.0_@codemirror+autocomplete@6.18.3_@codemirror+language_bio77rnkdqacjhzfxlseer7pb4/node_modules/@strapi/core/dist/core-api/service/collection-type.js
+
+
+```
+
+```

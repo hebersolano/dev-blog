@@ -1,5 +1,19 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface BlogLikes extends Struct.ComponentSchema {
+  collectionName: 'components_blog_likes';
+  info: {
+    displayName: 'Likes';
+    icon: 'thumbUp';
+  };
+  attributes: {
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface BlogPostsSelection extends Struct.ComponentSchema {
   collectionName: 'components_blog_posts_selections';
   info: {
@@ -143,6 +157,7 @@ export interface SeoSeoInformation extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'blog.likes': BlogLikes;
       'blog.posts-selection': BlogPostsSelection;
       'config.social-links': ConfigSocialLinks;
       'layout.featured-course': LayoutFeaturedCourse;

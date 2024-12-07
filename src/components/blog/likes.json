@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_blog_likes",
+  "info": {
+    "displayName": "Likes",
+    "icon": "thumbUp"
+  },
+  "options": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}

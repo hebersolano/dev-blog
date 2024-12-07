@@ -56,6 +56,12 @@
       "type": "boolean",
       "default": false,
       "required": true
+    },
+    "user_likes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "posts"
     }
   }
 }
