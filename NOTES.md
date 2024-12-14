@@ -71,11 +71,12 @@ Is injected is strapi's core functions (policies, controllers and services) to g
 - Services belong to APIs and plugins
 - They are accessible from Controllers and other Services via the `strapi.service()`
 
-# INDEX
+##[Lifecycle hooks](https://docs.strapi.io/dev-docs/backend-customization/models#lifecycle-hooks)
 
-1.  Strapi core collection-type services: node*modules/.pnpm/@strapi+core@5.4.2*@babel+runtime@7.26.0_@codemirror+autocomplete@6.18.3_@codemirror+language_bio77rnkdqacjhzfxlseer7pb4/node_modules/@strapi/core/dist/core-api/service/collection-type.js
-
-
-```
-
-```
+- Are functions that get triggered when Strapi queries are called, can be customized declaratively or programmatically.
+  - Declarative: lifecycle hooks for content-types you created
+  - Programmatic: for all other cases. In the bootstrap function
+- Assignment: implement a public author field in post model (admin users are private)
+  - Create a new "Author" type
+  - Create a public author for every admin, keep entities in sync for updates.
+  - Automatically assign Authors to post

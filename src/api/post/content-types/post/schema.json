@@ -39,7 +39,7 @@
     "authors": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "admin::user"
+      "target": "api::author.author"
     },
     "tags": {
       "type": "relation",
@@ -61,6 +61,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
+      "private": true,
       "inversedBy": "posts"
     }
   }

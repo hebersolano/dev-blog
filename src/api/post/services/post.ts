@@ -4,6 +4,8 @@
 
 import { factories } from "@strapi/strapi";
 
+const UID = "api::post.post";
+
 type AnyDocument = {
   documentId: string;
   id: number;
@@ -12,6 +14,32 @@ type AnyDocument = {
 };
 
 export default factories.createCoreService("api::post.post", ({ strapi }) => ({
+  async likePost(ctx: any, postId: string, userId: string) {
+    const post = await strapi.db.query(UID).findOne({
+      where: {
+        documentId: postId,
+      },
+      populate: { user_likes: true },
+    });
+
+    if (!post) {
+      ctx.notFound();
+      return false;
+    }
+
+    const userLikePost = post.user_likes.some((userLike) => userLike.documentId === userId);
+
+    const userRelation = {
+      [userLikePost ? "disconnect" : "connect"]: [userId],
+    };
+
+    await strapi.service(UID).update(postId, {
+      data: {
+        user_likes: userRelation,
+      },
+    });
+  },
+
   premiumPostsAccess(credentials, query: Record<string, Record<string, string>>) {
     let filters: Record<string, string> = query.filters || {};
     if (credentials && credentials?.role.name === "Guest Post") {
@@ -35,23 +63,35 @@ export default factories.createCoreService("api::post.post", ({ strapi }) => ({
     return response;
   },
 
-  // Method 2: Wrapping a core service (leaves core logic in place)
-  async find(...args) {
-    // Calling the default core controller
-    const { results, pagination } = await super.find(...args);
+  async find(params: Record<string, any> = {}) {
+    let populate = params?.populate || {};
+    populate.user_likes = true;
+    params = { ...params, populate };
+
+    const { results, pagination } = await super.find(params);
+
+    results.forEach((res) => {
+      res.likes = res.user_likes.length;
+      delete res.user_likes;
+    });
+
     return { results, pagination };
   },
 
-  // Method 3: Replacing a core service
   async findOne(documentId, params = {}) {
-    const res = strapi.documents("api::post.post").findOne({
+    const post = (await strapi.documents("api::post.post").findOne({
       ...params,
       status: "published",
       populate: {
         user_likes: true,
       },
       documentId,
-    });
-    return res as Promise<AnyDocument>;
+    })) as AnyDocument;
+
+    const likes = post.user_likes.length;
+    delete post.user_likes;
+    post.likes = likes;
+
+    return Promise.resolve(post);
   },
 }));
