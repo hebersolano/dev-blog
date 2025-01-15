@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_config_user_ids",
+  "info": {
+    "displayName": "UserId",
+    "icon": "alien"
+  },
+  "options": {},
+  "attributes": {
+    "admin_id": {
+      "type": "integer"
+    },
+    "doc_id": {
+      "type": "string"
+    }
+  }
+}

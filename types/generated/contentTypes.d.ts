@@ -381,6 +381,7 @@ export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    admin_id: Schema.Attribute.Integer & Schema.Attribute.Private;
     admin_user: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

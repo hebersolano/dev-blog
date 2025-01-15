@@ -30,6 +30,10 @@
     "email": {
       "type": "email",
       "required": true
+    },
+    "admin_id": {
+      "type": "integer",
+      "private": true
     }
   }
 }

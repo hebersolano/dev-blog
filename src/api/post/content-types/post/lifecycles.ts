@@ -1,16 +1,19 @@
+import { connect } from "http2";
+
 export default {
   async beforeCreate(event) {
-    const { data, where, select, populate } = event.params;
-    console.log("before create", data.createdBy);
-    const res = await strapi.db.query("api::author.author").findOne({
-      populate: {
-        admin_user: true,
-      },
-      where: {
-        admin_user: { documentId: data.createdBy.documentId },
-      },
-    });
-
-    console.log("res query", res);
+    //TODO: try to set author before create
+    // console.log("before create event:", event);
+    // const { data } = event.params;
+    // const adminId = typeof data.createdBy === "number" ? data.createdBy : data.createdBy.id;
+    // if (!adminId) return;
+    // console.log("admin id:", event.params);
+    // const author = await strapi.documents("api::author.author").findFirst({
+    //   filters: {
+    //     admin_id: adminId,
+    //   },
+    // });
+    // event.params.data.authors = { set: [author.id] };
+    // Object.assign(event.params.data, { author: { set: [{ id: author.id }] } });
   },
 };

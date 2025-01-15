@@ -38,6 +38,18 @@ export interface ConfigSocialLinks extends Struct.ComponentSchema {
   };
 }
 
+export interface ConfigUserId extends Struct.ComponentSchema {
+  collectionName: 'components_config_user_ids';
+  info: {
+    displayName: 'UserId';
+    icon: 'alien';
+  };
+  attributes: {
+    admin_id: Schema.Attribute.Integer;
+    doc_id: Schema.Attribute.String;
+  };
+}
+
 export interface LayoutFeaturedCourse extends Struct.ComponentSchema {
   collectionName: 'components_layout_featured_courses';
   info: {
@@ -160,6 +172,7 @@ declare module '@strapi/strapi' {
       'blog.likes': BlogLikes;
       'blog.posts-selection': BlogPostsSelection;
       'config.social-links': ConfigSocialLinks;
+      'config.user-id': ConfigUserId;
       'layout.featured-course': LayoutFeaturedCourse;
       'layout.hero': LayoutHero;
       'layout.link': LayoutLink;
