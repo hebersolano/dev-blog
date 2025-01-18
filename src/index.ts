@@ -9,7 +9,40 @@ export default {
    *
    * This gives you an opportunity to extend code.
    */
-  register(/* { strapi }: { strapi: Core.Strapi } */) {},
+  register({ strapi }: { strapi: Core.Strapi }) {
+    const extensionService = strapi.plugin("graphql").service("extension");
+    // extensionService.shadowCRUD("api::post.post").disable();
+    // extensionService.shadowCRUD("api::post.post").disableQueries();
+    // extensionService.shadowCRUD("api::post.post").disableMutations();
+    // extensionService.shadowCRUD("api::tag.tag").disableActions(["update"]);
+
+    const extension = (/*{ nexus }*/) => ({
+      // GraphQL SDL
+      typeDefs: `
+          type Mutation {
+              likePost(id: ID): PostEntityResponse
+          }
+      `,
+      resolvers: {
+        Mutation: {
+          likePost: async (parent, args, ctx, info) => {
+            // resolver implementation
+            const { id: postId } = args;
+            const userId = ctx.state.user.id;
+            const likedPost = await strapi.service("api::post.post").likePost({ postId, userId });
+          },
+        },
+      },
+      resolversConfig: {
+        "Mutation.likePost": {
+          auth: {
+            scope: ["api::post.post.likePost"],
+          },
+        },
+      },
+    });
+    extensionService.use(extension);
+  },
 
   /**
    * An asynchronous bootstrap function that runs before

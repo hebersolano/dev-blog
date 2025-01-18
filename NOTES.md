@@ -80,3 +80,5 @@ Is injected is strapi's core functions (policies, controllers and services) to g
   - Create a new "Author" type
   - Create a public author for every admin, keep entities in sync for updates.
   - Automatically assign Authors to post
+
+# GrapthQL
