@@ -1,6 +1,7 @@
 // import type { Core } from '@strapi/strapi';
 
-import { Core } from "@strapi/strapi";
+import type { Core } from "@strapi/strapi";
+import likePost from "./api/post/graphql/post";
 
 export default {
   /**
@@ -18,27 +19,14 @@ export default {
 
     const extension = (/*{ nexus }*/) => ({
       // GraphQL SDL
-      typeDefs: `
-          type Mutation {
-              likePost(id: ID): PostEntityResponse
-          }
-      `,
+      typeDefs: likePost.typeDef,
       resolvers: {
         Mutation: {
-          likePost: async (parent, args, ctx, info) => {
-            // resolver implementation
-            const { id: postId } = args;
-            const userId = ctx.state.user.id;
-            const likedPost = await strapi.service("api::post.post").likePost({ postId, userId });
-          },
+          likePost: likePost.resolverMutation(strapi),
         },
       },
       resolversConfig: {
-        "Mutation.likePost": {
-          auth: {
-            scope: ["api::post.post.likePost"],
-          },
-        },
+        "Mutation.likePost": likePost.resolverConfigMutation,
       },
     });
     extensionService.use(extension);
