@@ -1,19 +1,18 @@
-import { connect } from "http2";
-
 export default {
   async beforeCreate(event) {
-    //TODO: try to set author before create
-    // console.log("before create event:", event);
-    // const { data } = event.params;
-    // const adminId = typeof data.createdBy === "number" ? data.createdBy : data.createdBy.id;
-    // if (!adminId) return;
-    // console.log("admin id:", event.params);
-    // const author = await strapi.documents("api::author.author").findFirst({
-    //   filters: {
-    //     admin_id: adminId,
-    //   },
-    // });
-    // event.params.data.authors = { set: [author.id] };
-    // Object.assign(event.params.data, { author: { set: [{ id: author.id }] } });
+    // set author from admin use
+    const { data } = event.params;
+    // beforeCreate triggered twice as it creates both the draft and published versions https://docs.strapi.io/dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service#table
+    const adminId = typeof data.createdBy === "number" ? data.createdBy : data.createdBy.id;
+    const author = await strapi.documents("api::author.author").findFirst({
+      fields: ["id", "admin_id"],
+      filters: {
+        admin_id: adminId,
+      },
+    });
+    event.params.data.authors =
+      typeof data.createdBy === "number"
+        ? { connect: [{ id: author.id }] }
+        : { set: [{ id: author.id }] };
   },
 };

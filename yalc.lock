@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "github-projects": {
+      "signature": "c9aefe853e17121139642a090be63c73",
+      "replaced": "link:.yalc/github-projects"
+    }
+  }
+}

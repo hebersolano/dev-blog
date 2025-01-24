@@ -80,3 +80,24 @@ Is injected is strapi's core functions (policies, controllers and services) to g
   - Create a new "Author" type
   - Create a public author for every admin, keep entities in sync for updates.
   - Automatically assign Authors to post
+
+# [GraphQL Plugin](https://docs.strapi.io/dev-docs/plugins/graphql)
+
+# [Developing Strapi plugin](https://docs.strapi.io/dev-docs/plugins/developing-plugins)
+
+## [Plugin creation](https://docs.strapi.io/dev-docs/plugins/development/create-a-plugin)
+
+- Install yalc `npm install -g yalc`
+- Create project `npx @strapi/sdk-plugin init my-strapi-plugin`
+- Use `npm run watch:link` to add plugin project to yalc local repo
+- Follow instructions showed by previous command, usually in your strapi project run `npx yalc add your-pluing-name && npx yalc link your-pluing-name && npm install` to install your plugin
+
+## Plugin development: Github projects
+
+1. Fetch all public repos by creating a plugin's route-controller-service chain.
+2. Create the project content type
+3. Extend the chain at step #1 to also return info about related projects (i.e. if already exists)
+4. Creating the admin UI to list repos (with their state) and generate projects, by taking advantage of Strapi's design system
+5. Automatically create, delete projects from repos (individually and in bulk)
+6. Use Admin RBAC features to control access to the whole plugin and to single admin routes
+7. Make the plugin multi-language

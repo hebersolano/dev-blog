@@ -1,6 +1,7 @@
 // import type { Core } from '@strapi/strapi';
 
 import { Core } from "@strapi/strapi";
+import { createUsernameFromEmail } from "../utils/general";
 
 export default {
   /**
@@ -24,7 +25,7 @@ export default {
 
       async beforeCreate(event) {
         const { username, email } = event.params.data;
-        let newUsername = username ? username : email.slice(0, email.search(/@/) - 1);
+        let newUsername = username ? username : createUsernameFromEmail(email);
         event.params.data.username = newUsername;
       },
 
