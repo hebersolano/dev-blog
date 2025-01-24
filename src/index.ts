@@ -1,6 +1,7 @@
 // import type { Core } from '@strapi/strapi';
 
-import { Core } from "@strapi/strapi";
+import type { Core } from "@strapi/strapi";
+import likePost from "./api/post/graphql/post";
 import { createUsernameFromEmail } from "../utils/general";
 
 export default {
@@ -10,7 +11,27 @@ export default {
    *
    * This gives you an opportunity to extend code.
    */
-  register(/* { strapi }: { strapi: Core.Strapi } */) {},
+  register({ strapi }: { strapi: Core.Strapi }) {
+    const extensionService = strapi.plugin("graphql").service("extension");
+    // extensionService.shadowCRUD("api::post.post").disable();
+    // extensionService.shadowCRUD("api::post.post").disableQueries();
+    // extensionService.shadowCRUD("api::post.post").disableMutations();
+    // extensionService.shadowCRUD("api::tag.tag").disableActions(["update"]);
+
+    const extension = (/*{ nexus }*/) => ({
+      // GraphQL SDL
+      typeDefs: likePost.typeDef,
+      resolvers: {
+        Mutation: {
+          likePost: likePost.resolverMutation(strapi),
+        },
+      },
+      resolversConfig: {
+        "Mutation.likePost": likePost.resolverConfigMutation,
+      },
+    });
+    extensionService.use(extension);
+  },
 
   /**
    * An asynchronous bootstrap function that runs before
