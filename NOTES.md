@@ -101,3 +101,7 @@ Is injected is strapi's core functions (policies, controllers and services) to g
 5. Automatically create, delete projects from repos (individually and in bulk)
 6. Use Admin RBAC features to control access to the whole plugin and to single admin routes
 7. Make the plugin multi-language
+
+## Building
+
+1. `npm install @octokit/request`

@@ -33,11 +33,12 @@
   "dependencies": {
     "@strapi/design-system": "^2.0.0-rc.14",
     "@strapi/icons": "^2.0.0-rc.14",
+    "ky": "^1.7.4",
     "react-intl": "^7.1.5"
   },
   "peerDependencies": {
-    "@strapi/strapi": "^5.8.1",
     "@strapi/sdk-plugin": "^5.3.0",
+    "@strapi/strapi": "^5.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.28.2",
@@ -53,5 +54,5 @@
   "description": "Show github projects automaticly from your account",
   "license": "MIT",
   "author": "Heber Solano <hebersolano1@gmail.com>",
-  "yalcSig": "c9aefe853e17121139642a090be63c73"
+  "yalcSig": "3ae2337a694fb3e9e0649fc6e87c92e5"
 }
