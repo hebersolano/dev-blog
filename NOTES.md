@@ -90,7 +90,8 @@ Is injected is strapi's core functions (policies, controllers and services) to g
 - Install yalc `npm install -g yalc`
 - Create project `npx @strapi/sdk-plugin init my-strapi-plugin`
 - Use `npm run watch:link` to add plugin project to yalc local repo
-- Follow instructions showed by previous command, usually in your strapi project run `npx yalc add your-pluing-name && npx yalc link your-pluing-name && npm install` to install your plugin
+<!-- - install local plugin `npx yalc add --link your-pluing-name && npm install` -->
+- Follow instructions showed by previous command, usually in your strapi project run `npx yalc add --link your-pluing-name && npm install` to install your plugin
 
 ## Plugin development: Github projects
 
